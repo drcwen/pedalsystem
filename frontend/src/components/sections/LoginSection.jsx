@@ -4,11 +4,33 @@ import { motion } from "motion/react"
 import { useNavigate } from "react-router-dom";
 import { fadeBack } from "../../animations/fadeBack"
 import TextField from "../../components/ui/TextField"
-
+import { useState } from "react";
+import axios from "axios";
 
 function LoginSection() {
 
     const navigate = useNavigate();
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const res = await axios.post('http://localhost:4000/users/login', {
+                username,
+                password
+            });
+            if(res.data.success) {
+                navigate("/");
+            }
+        } catch(err) {
+            const message = err.response?.data?.message || err.message;
+            console.log(message);
+            alert(message);
+        }
+    }
 
   return (
 
@@ -41,13 +63,21 @@ function LoginSection() {
 
                         <h1 className='md:text-5xl text-3xl font-bold tracking-wide text-darkblue'>LOGIN</h1>
 
-                        <form className='flex flex-col gap-10 items-center'>
+                        <form onSubmit={handleSubmit}
+                            className='flex flex-col gap-10 items-center'>
                             <div className='flex flex-col gap-5'>
                                 
-                                <TextField Type="text" Placeholder="Username"/>
+                                {/*Username*/}
+                                <TextField Type="text" 
+                                            Placeholder="Username"
+                                            value={username}
+                                            onChange={(e) => setUsername(e.target.value)}/>
 
                                 {/*Password*/}
-                                <TextField Type="password" Placeholder="Password"/>
+                                <TextField Type="password" 
+                                            Placeholder="Password"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}/>
                             </div>
 
                             {/*Login Button*/}
@@ -55,6 +85,7 @@ function LoginSection() {
                                 whileHover={buttonClickBounce.whileHover}
                                 whileTap={buttonClickBounce.whileTap}
                                 onHoverStart={buttonClickBounce.onHoverStart}
+                                type="submit"
                             >
                                 <div className='cursor-pointer hover:bg-navyblue transition-all duration-300 text-lg rounded-xl bg-blue w-fit px-6 py-2 font-akagi font-bold text-white'>Login</div>
                             </motion.button>

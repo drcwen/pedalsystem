@@ -2,10 +2,11 @@
 const express = require('express')
 const router = express.Router()
 const usersModel = require('../models/usersModel')
+const bcrypt = require("bcrypt");
 
 router.post("/create-account", async (req, res) => {
   try {
-    const { email } = req.body;
+    const { firstName, lastName, username, email, password } = req.body;
 
     const existingUser = await usersModel.findOne({ email });
 
@@ -16,7 +17,15 @@ router.post("/create-account", async (req, res) => {
       });
     }
 
-    const createAccount = await usersModel(req.body);
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const createAccount = new usersModel({
+      firstName,
+      lastName,
+      username,
+      email,
+      password: hashedPassword,
+    })
     await createAccount.save();
 
     res.status(201).json({

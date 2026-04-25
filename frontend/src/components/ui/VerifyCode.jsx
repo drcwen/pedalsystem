@@ -35,7 +35,7 @@ function VerifyCode({ FirstName, LastName, Username, Email, Password}) {
             if (res.data.success) {
                 alert("Correct code.");
                 
-                const res = await axios.post("http://localhost:4000/users/create-account", {
+                const createRes = await axios.post("http://localhost:4000/users/create-account", {
                     firstName,
                     lastName,
                     username,
@@ -43,7 +43,7 @@ function VerifyCode({ FirstName, LastName, Username, Email, Password}) {
                     password
                 });
 
-                if(res.data.success) {
+                if(createRes.data.success) {
                     alert("Successfully created an account.");
                     navigate("/login");
                 }

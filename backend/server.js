@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const inventory = require("./routes/inventory.js");
 const authRoute = require("./routes/auth.js");
 const createAccount = require("./routes/createAccount")
+const login = require('./routes/login')
 
 dotenv.config();
 
@@ -26,6 +27,9 @@ app.use("/auth", authRoute);
 
 // For creating accounts
 app.use("/users", createAccount)
+
+// For login
+app.use('/users', login)
 
 // DB connection
 mongoose.connect(process.env.MONGO_URI)
