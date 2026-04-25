@@ -2,6 +2,8 @@ import { fadeScale } from "../../animations/fadeScale"
 import {buttonClickBounce} from "../../animations/buttonClickBounce"
 import { motion } from "motion/react"
 import { useNavigate } from "react-router-dom";
+import { fadeBack } from "../../animations/fadeBack"
+import TextField from "../../components/ui/TextField"
 
 
 function LoginSection() {
@@ -28,9 +30,9 @@ function LoginSection() {
     
         {/*Login Grid*/}
         <motion.div
-            initial={fadeScale.initial}
-            animate={fadeScale.animate}
-            transition={fadeScale.transition}
+            initial={fadeBack.initial}
+            animate={fadeBack.animate}
+            transition={fadeBack.transition}
         >
             <div className='md:h-full md:flex items-center justify-center'>
                 <div className='bg-white md:rounded-3xl md:px-20 px-5 py-10 rounded-xl md:py-20 flex flex-col gap-10 md:gap-10'>
@@ -42,13 +44,10 @@ function LoginSection() {
                         <form className='flex flex-col gap-10 items-center'>
                             <div className='flex flex-col gap-5'>
                                 
-                                {/*Username*/}
-                                <input className='w-full md:w-90 border border-2 border-gray rounded-xl md:px-3 px-2 py-1 md:py-2 font-akagi 
-                                md:text-xl text-lg font-semibold text-gray' required placeholder='Username'/>
+                                <TextField Type="text" Placeholder="Username"/>
 
                                 {/*Password*/}
-                                <input className='w-full md:w-90 border border-2 border-gray rounded-xl md:px-3 px-2 py-1 md:py-2 font-akagi 
-                                md:text-xl text-lg font-semibold text-gray' required type='password' placeholder='Password'/>
+                                <TextField Type="password" Placeholder="Password"/>
                             </div>
 
                             {/*Login Button*/}
@@ -77,8 +76,9 @@ function LoginSection() {
                             text-darkblue'>No account yet? </h1>
 
                             {/*Create account*/}
-                            <h1 className='md:text-lg text-sm font-akagi font-bold text-darkblue hover:text-navyblue hover:scale-101 
-                            cursor-pointer duration-300 transition-all underline'>Create account</h1>
+                            <h1 onClick={() => navigate("/createaccount")}
+                                className='md:text-lg text-sm font-akagi font-bold text-darkblue hover:text-navyblue hover:scale-101 
+                                cursor-pointer duration-300 transition-all underline'>Create account</h1>
 
                         </div>
                     </div>

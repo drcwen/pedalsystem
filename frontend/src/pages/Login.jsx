@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Navigation from "../components/layout/Navigation/NavigationPC"
 import LoginSection from "../components/sections/LoginSection"
 
@@ -12,10 +11,8 @@ function Login() {
             <Navigation />
             <LoginSection />
             
-
         </div>
-        
-
+      
     </>
   )
 }
