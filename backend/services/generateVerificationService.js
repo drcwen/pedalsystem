@@ -39,6 +39,7 @@ const verifyCode = (req, res) => {
 
   if (verificationStore[email] === code) {
     delete verificationStore[email];
+    
     return res.json({ success: true });
   }
 

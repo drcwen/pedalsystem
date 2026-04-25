@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 const inventory = require("./routes/inventory.js");
 const authRoute = require("./routes/auth.js");
+const createAccount = require("./routes/createAccount")
 
 dotenv.config();
 
@@ -17,8 +18,14 @@ app.use(cors({
 
 app.use(express.json());
 
+//For landing bikes
 app.use("/inventory", inventory);
+
+// For email verification codes
 app.use("/auth", authRoute);
+
+// For creating accounts
+app.use("/users", createAccount)
 
 // DB connection
 mongoose.connect(process.env.MONGO_URI)

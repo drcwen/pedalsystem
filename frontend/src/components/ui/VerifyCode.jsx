@@ -1,8 +1,53 @@
 import { fadeScale } from "../../animations/fadeScale"
 import NumberField from "../../components/ui/NumberField"
 import { motion } from "motion/react"
+import {buttonClickBounce} from "../../animations/buttonClickBounce"
+import { useState } from "react";
+import axios from "axios";
 
-function VerifyCode() {
+
+function VerifyCode({ FirstName, LastName, Username, Email, Password}) {
+
+    const firstName = FirstName;
+    const lastName = LastName;
+    const username = Username;
+    const email = Email
+    const password = Password;
+
+    const [code, setCode] = useState();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const res = await axios.post("http://localhost:4000/auth/verify-code", {
+                email,
+                code
+            });
+
+            console.log(res.data);
+
+            if (res.data.success) {
+                alert("yehay");
+                
+                const res = await axios.post("http://localhost:4000/users/create-account", {
+                    firstName,
+                    lastName,
+                    username,
+                    email,
+                    password
+                })
+                return;
+            } else {
+                alert("Invalid code");
+                return;
+            }
+
+        } catch(err) {
+            console.log(err.response?.data || err.message);
+            alert(err);
+        }
+    }
 
     return (
 
@@ -23,13 +68,24 @@ function VerifyCode() {
                 </div>  
 
                 <div className=''>
-                    <form className='flex flex-col items-center gap-10'>
+                    <form 
+                        onSubmit={handleSubmit}
+                        className='flex flex-col items-center gap-10'>
                         <NumberField Placeholder="Enter 6-Digit Code"
-                            Length="6"/>
+                            Length="6" 
+                            value={code}
+                            onChange={(e) => setCode(e.target.value)}/>
 
-                        <div className='bg-blue rounded-lg px-3 py-2 w-fit shadow-xl'>
-                            <h1 className='text-xl font-akagi font-bold text-white'>Submit</h1>
-                        </div>
+                        <motion.button
+                            whileHover={buttonClickBounce.whileHover}
+                            whileTap={buttonClickBounce.whileTap}
+                            onHoverStart={buttonClickBounce.onHoverStart}
+                            type="submit"
+                        >
+                            <div className='bg-blue rounded-lg px-3 py-2 w-fit shadow-xl cursor-pointer'>
+                                <h1 className='text-xl font-akagi font-bold text-white'>Submit</h1>
+                            </div>
+                        </motion.button>
                     </form>
                 </div>
             </div>
