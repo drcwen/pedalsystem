@@ -36,7 +36,11 @@ function VerifyCode({ FirstName, LastName, Username, Email, Password}) {
                     username,
                     email,
                     password
-                })
+                });
+
+                if(res.data.success) {
+                    alert("yehayyyy");
+                }
                 return;
             } else {
                 alert("Invalid code");
