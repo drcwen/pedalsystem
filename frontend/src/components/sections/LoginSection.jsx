@@ -1,0 +1,96 @@
+import { fadeScale } from "../../animations/fadeScale"
+import {buttonClickBounce} from "../../animations/buttonClickBounce"
+import { motion } from "motion/react"
+import { useNavigate } from "react-router-dom";
+
+
+function LoginSection() {
+
+    const navigate = useNavigate();
+
+  return (
+
+    <div className='flex flex-col lg:flex lg:flex-col lg:grid lg:grid-cols-2 lg:gap-10 gap-10 lg:flex-1'>
+
+        <motion.div
+            initial={fadeScale.initial}
+            animate={fadeScale.animate}
+            transition={fadeScale.transition}
+        >
+
+            {/*3Jremy Title*/}
+            <div className='lg:flex lg:h-full lg:items-center lg:justify-center'>
+                <h1 className='lg:text-6xl lg:text-2xl text-3xl font-akagi text-center leading-tight font-black 
+                text-yellow [text-shadow:2px_2px_8px_rgba(0,0,0,0.8)]'>3Jremy's <br/> Rent A Bike!</h1>
+            </div>
+        </motion.div>
+
+    
+        {/*Login Grid*/}
+        <motion.div
+            initial={fadeScale.initial}
+            animate={fadeScale.animate}
+            transition={fadeScale.transition}
+        >
+            <div className='md:h-full md:flex items-center justify-center'>
+                <div className='bg-white md:rounded-3xl md:px-20 px-5 py-10 rounded-xl md:py-20 flex flex-col gap-10 md:gap-10'>
+
+                    <div className='items-center text-center flex flex-col gap-15'>
+
+                        <h1 className='md:text-5xl text-3xl font-bold tracking-wide text-darkblue'>LOGIN</h1>
+
+                        <form className='flex flex-col gap-10 items-center'>
+                            <div className='flex flex-col gap-5'>
+                                
+                                {/*Username*/}
+                                <input className='w-full md:w-90 border border-2 border-gray rounded-xl md:px-3 px-2 py-1 md:py-2 font-akagi 
+                                md:text-xl text-lg font-semibold text-gray' required placeholder='Username'/>
+
+                                {/*Password*/}
+                                <input className='w-full md:w-90 border border-2 border-gray rounded-xl md:px-3 px-2 py-1 md:py-2 font-akagi 
+                                md:text-xl text-lg font-semibold text-gray' required type='password' placeholder='Password'/>
+                            </div>
+
+                            {/*Login Button*/}
+                            <motion.button
+                                whileHover={buttonClickBounce.whileHover}
+                                whileTap={buttonClickBounce.whileTap}
+                                onHoverStart={buttonClickBounce.onHoverStart}
+                            >
+                                <div className='cursor-pointer hover:bg-navyblue transition-all duration-300 text-lg rounded-xl bg-blue w-fit px-6 py-2 font-akagi font-bold text-white'>Login</div>
+                            </motion.button>
+                        </form>
+
+                    </div>
+
+                    <div className='flex flex-col gap-1'>
+
+                        {/*Forgot Password*/}
+                        <h1 onClick={() => navigate("/forgotpassword")}
+                            className='md:text-lg text-sm font-akagi font-bold text-darkblue hover:text-navyblue hover:scale-101 
+                            cursor-pointer duration-300 transition-all underline'>Forgot password?</h1>
+                        
+                        <div className='flex flex-row gap-2'>
+
+                            {/*No account*/}
+                            <h1 className='md:text-lg text-sm font-akagi font-semibold 
+                            text-darkblue'>No account yet? </h1>
+
+                            {/*Create account*/}
+                            <h1 className='md:text-lg text-sm font-akagi font-bold text-darkblue hover:text-navyblue hover:scale-101 
+                            cursor-pointer duration-300 transition-all underline'>Create account</h1>
+
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+        </motion.div>
+    </div>
+
+  )
+
+  }
+
+export default LoginSection
