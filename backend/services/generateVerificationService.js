@@ -26,7 +26,10 @@ const sendVerificationCode = async (req, res) => {
         `,
         });
 
-        res.json({ message: "Code sent" });
+        return res.status(200).json({
+        success: true,
+        message: "Code sent to email",
+        });
 
     } catch (err) {
         res.status(500).json({ error: err.message });

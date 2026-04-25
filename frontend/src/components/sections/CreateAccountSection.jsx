@@ -26,21 +26,35 @@ function CreateAccountSection() {
         e.preventDefault();
 
         if(!passwordsMatch) {
-            alert("Password do not match");
-        } else {
 
-            try {
-                const res = await axios.post("http://localhost:4000/auth/send-code", {
-                email,
-                });
+            alert("Passwords do not match");
+            return;
+        } 
 
-                console.log("Code sent:", res.data);
-                setStep(2);
-            } catch(err) {
-                console.log(err.response?.data || err.message);
-                alert("Failed to send verification code");
+        try {
+            const res = await axios.post("http://localhost:4000/users/check-existing",{ 
+                email, 
+                username 
+            });
+
+            if (res.data.success) {
+                alert("Available username and email.");
+
+                const sendRes = await axios.post("http://localhost:4000/auth/send-code", {
+                    email
+                })
+
+                if (sendRes.data.success) {
+                    alert("Code is sent to your email.");
+                    setStep(2);
+                }
             }
-        }
+
+            } catch (err) {
+                const message = err.response?.data?.message || err.message;
+                console.log(message);
+                alert(message);
+            }
     }
 
 

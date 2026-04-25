@@ -4,7 +4,7 @@ import { motion } from "motion/react"
 import {buttonClickBounce} from "../../animations/buttonClickBounce"
 import { useState } from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 
 function VerifyCode({ FirstName, LastName, Username, Email, Password}) {
 
@@ -16,8 +16,13 @@ function VerifyCode({ FirstName, LastName, Username, Email, Password}) {
 
     const [code, setCode] = useState();
 
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        console.log(email);
+        console.log(code);
 
         try {
             const res = await axios.post("http://localhost:4000/auth/verify-code", {
@@ -28,7 +33,7 @@ function VerifyCode({ FirstName, LastName, Username, Email, Password}) {
             console.log(res.data);
 
             if (res.data.success) {
-                alert("yehay");
+                alert("Correct code.");
                 
                 const res = await axios.post("http://localhost:4000/users/create-account", {
                     firstName,
@@ -39,7 +44,8 @@ function VerifyCode({ FirstName, LastName, Username, Email, Password}) {
                 });
 
                 if(res.data.success) {
-                    alert("yehayyyy");
+                    alert("Successfully created an account.");
+                    navigate("/login");
                 }
                 return;
             } else {
@@ -47,9 +53,10 @@ function VerifyCode({ FirstName, LastName, Username, Email, Password}) {
                 return;
             }
 
-        } catch(err) {
-            console.log(err.response?.data || err.message);
-            alert(err);
+        } catch (err) {
+            const message = err.response?.data?.message || err.message;
+            console.log(message);
+            alert(message);
         }
     }
 
