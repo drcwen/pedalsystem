@@ -22,7 +22,8 @@ function LoginSection() {
                 username,
                 password
             });
-            if(res.data.success) {
+            if(res.data.accessToken) {
+                localStorage.setItem("token", res.data.accessToken);
                 navigate("/");
             }
         } catch(err) {
